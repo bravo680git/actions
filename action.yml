@@ -20,4 +20,4 @@ runs:
       run: |
           echo "TOKEN=${{ inputs.token }}" >> .env
           echo "TO=${{ inputs.to }}" >> .env
-          node --env-file=.env index.js
+          node --env-file=.env index.mjs
