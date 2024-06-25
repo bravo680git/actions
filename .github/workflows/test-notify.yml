@@ -1,12 +1,12 @@
 name: Test notify action
 on:
     push:
-        branches: main
+        branches: [v1]
 jobs:
     TestNotify:
         runs-on: ubuntu-latest
         steps:
-            - uses: bravo680git/tele-notify@main
+            - uses: bravo680git/tele-notify@v1
               with:
                 status: ${{ job.status }}
                 project: ${{ github.repository }}

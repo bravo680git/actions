@@ -1,33 +1,22 @@
 inputs:
-  status: 
-    description: 'The status of the job (success or failure)'
+  status:
+    description: "Job status (success or failure)"
     required: true
-    default: 'success'
   project:
-    description: 'The project name and stage'
-    required: false
+    description: "Project name and stage"
+  to:
+    description: "Telegram channel id"
   token:
-    description: 'Telegram chatbot token'
-    required: true
-  to: 
-    description: 'Telegram channel id'
-    required: true
+    description: "Telegram chatbot token"
 
 runs:
   using: "composite"
   steps:
-    - name: Send Telegram notification on success
-      if: ${{ inputs.status == 'success' }}
-      uses: appleboy/telegram-action@master
+    - uses: actions/setup-node@v4
       with:
-        to: ${{ inputs.to }}
-        token: ${{ inputs.token }}
-        message: "🎉 CI/CD job successful! Workflow: ${{ github.workflow }} | Job: ${{ github.job }} | Project: ${{ inputs.project }}"
-
-    - name: Send Telegram notification on failure
-      if: ${{ inputs.status == 'failure' }}
-      uses: appleboy/telegram-action@master
-      with:
-        to: ${{ inputs.to }}
-        token: ${{ inputs.token }}
-        message: "❌ CI/CD job failed! Workflow: ${{ github.workflow }} | Job: ${{ github.job }} | Project: ${{ inputs.project }}"
+        node-version: 20
+    - run: |
+        npm i
+        echo "TOKEN=${{ inputs.token }}" >> .env
+        echo "TO=${{ inputs.to }}" >> .env
+        npm start
