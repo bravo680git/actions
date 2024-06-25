@@ -6,7 +6,7 @@ jobs:
     TestNotify:
         runs-on: ubuntu-latest
         steps:
-            - uses: bravo680git/actions@main/notify
+            - uses: bravo680git/tele-notify@main
               with:
                 status: ${{ job.status }}
                 project: ${{ github.repository }}
