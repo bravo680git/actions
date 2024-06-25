@@ -1,0 +1,14 @@
+name: Test notify action
+on:
+    push:
+        branches: main
+jobs:
+    TestNotify:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: bravo680/actions/notify
+              with:
+                status: ${{ job.status }}
+                project: ${{ github.repository }}
+                to: ${{ secrets.TELE_CHANNEL_ID }}
+                token: ${{ secrets.TELE_TOKEN }}
