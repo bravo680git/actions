@@ -1,9 +1,35 @@
 import https from "https";
 
+const generateMsg = ({
+  status,
+  repo,
+  wfName,
+  jobName,
+  runId,
+  branch,
+}) => {
+  const icon = status === "success" ? "🎉🎉🎉" : "❌❌❌";
+  const url = `https://github.com/${repo}/actions/runs/${runId}`;
+  return `
+  ${icon} ${wfName} ${icon}
+  <b>Repository: </b>${repo}
+  <b>Branch: </b>${branch}
+  <b>Job: </b>${jobName}
+  <a href="${url}">${url}</a>
+  `;
+};
+
 const url = `/bot${process.env.TOKEN}/sendMessage`;
 const payload = JSON.stringify({
   chat_id: process.env.TO,
-  text: process.env.REPO + ' ' + process.env.STATUS,
+  text: generateMsg({
+    branch: process.env.BRANCH,
+    jobName: process.env.JOB_NAME,
+    repo: process.env.REPO,
+    runId: process.env.RUN_ID,
+    status: process.env.STATUS,
+    wfName: process.env.WF_NAME,
+  }),
   parse_mode: "HTML",
 });
 

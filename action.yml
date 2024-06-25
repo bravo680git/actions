@@ -1,9 +1,4 @@
 inputs:
-  status:
-    description: "Job status (success or failure)"
-    required: true
-  project:
-    description: "Project name and stage"
   to:
     description: "Telegram channel id"
   token:
@@ -20,6 +15,11 @@ runs:
       run: |
           echo "TOKEN=${{ inputs.token }}" >> .env
           echo "TO=${{ inputs.to }}" >> .env
+          echo "BRANCH=${{ github.ref_name }}" >> .env
+          echo "JOB_NAME=${{ github.job }}" >> .env
           echo "REPO=${{ github.repository }}" >> .env
+          echo "RUN_ID=${{ github.run_id }}" >> .env
           echo "STATUS=${{ job.status }}" >> .env
+          echo "WF_NAME=${{ github.workflow }}" >> .env
+          
           node --env-file=.env index.mjs
