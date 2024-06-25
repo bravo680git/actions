@@ -3,7 +3,7 @@ import https from "https";
 const url = `/bot${process.env.TOKEN}/sendMessage`;
 const payload = JSON.stringify({
   chat_id: process.env.TO,
-  text: "Hello world",
+  text: process.env.REPO + ' ' + process.env.STATUS,
   parse_mode: "HTML",
 });
 

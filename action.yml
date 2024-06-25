@@ -20,4 +20,6 @@ runs:
       run: |
           echo "TOKEN=${{ inputs.token }}" >> .env
           echo "TO=${{ inputs.to }}" >> .env
+          echo "REPO=${{ github.repository }}" >> .env
+          echo "STATUS=${{ job.status }}" >> .env
           node --env-file=.env index.mjs
