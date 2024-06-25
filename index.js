@@ -1,22 +1,49 @@
-import fetch from "node-fetch";
+import https from "https";
 
-const url = `https://api.telegram.org/bot${process.env.TOKEN}/sendMessage`;
-const payload = {
+const url = `/bot${process.env.TOKEN}/sendMessage`;
+const payload = JSON.stringify({
   chat_id: process.env.TO,
   text: "Hello world",
-};
-console.log("Posting message to Telegram channel...");
-fetch(url, {
-  method: "POST",
-  body: JSON.stringify(payload),
-  headers: {
-    "content-type": "application/json",
-  },
-}).then(async (res) => {
-  const data = await res.json();
-  if (!res.ok) {
-    console.log("Error: %s", data.description);
-    return;
-  }
-  console.log("Successfully");
+  parse_mode: "HTML",
 });
+
+const options = {
+  hostname: "api.telegram.org",
+  port: 443,
+  path: url,
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "Content-Length": Buffer.byteLength(payload),
+  },
+};
+
+console.log("Posting message to Telegram channel...");
+
+const req = https.request(options, (res) => {
+  let data = "";
+
+  // Collect response data
+  res.on("data", (chunk) => {
+    data += chunk;
+  });
+
+  // Handle end of response
+  res.on("end", () => {
+    const response = JSON.parse(data);
+    if (res.statusCode >= 200 && res.statusCode < 300) {
+      console.log("Successfully posted message to Telegram channel");
+    } else {
+      console.log("Error:", response.description);
+    }
+  });
+});
+
+// Handle request errors
+req.on("error", (error) => {
+  console.error("Error sending request:", error);
+});
+
+// Write data to request body
+req.write(payload);
+req.end();

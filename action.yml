@@ -17,7 +17,6 @@ runs:
         node-version: 20
     - shell: bash
       run: |
-          npm i
           echo "TOKEN=${{ inputs.token }}" >> .env
           echo "TO=${{ inputs.to }}" >> .env
-          npm start
+          node --env-file=.env index.js
