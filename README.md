@@ -16,11 +16,11 @@ on:
 jobs:
     TestNotify:
         runs-on: ubuntu-latest
-        if: always()
         steps:
             # - any jobs...
 
             - uses: bravo680git/tele-notify@v1
+              if: always()
               with:
                 # Telegram channel id - required
                 to: ${{ secrets.TELE_CHANNEL_ID }}
