@@ -6,9 +6,9 @@ jobs:
     # success job
     TestNotifySuccess:
         runs-on: ubuntu-latest
-        if: always()
         steps:
             - uses: bravo680git/tele-notify@v1
+              if: always()
               with:
                 to: ${{ secrets.TELE_CHANNEL_ID }}
                 token: ${{ secrets.TELE_TOKEN }}
@@ -21,6 +21,7 @@ jobs:
             - name: Make un error
               run: exit 1
             - uses: bravo680git/tele-notify@v1
+              if: always()
               with:
                 to: ${{ secrets.TELE_CHANNEL_ID }}
                 token: ${{ secrets.TELE_TOKEN }}
