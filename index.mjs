@@ -15,6 +15,7 @@ const generateMsg = ({
   <b>Repository: </b>${repo}
   <b>Branch: </b>${branch}
   <b>Job: </b>${jobName}
+  <b>Status: </b>${status}
   <a href="${url}">${url}</a>
   `;
 };

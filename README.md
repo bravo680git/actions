@@ -16,6 +16,7 @@ on:
 jobs:
     TestNotify:
         runs-on: ubuntu-latest
+        if: always()
         steps:
             # - any jobs...
 

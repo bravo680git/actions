@@ -3,9 +3,23 @@ on:
     push:
         branches: [v1]
 jobs:
-    TestNotify:
+    # success job
+    TestNotifySuccess:
         runs-on: ubuntu-latest
+        if: always()
         steps:
+            - uses: bravo680git/tele-notify@v1
+              with:
+                to: ${{ secrets.TELE_CHANNEL_ID }}
+                token: ${{ secrets.TELE_TOKEN }}
+
+    # failure job
+    TestNotifyFailure:
+        runs-on: ubuntu-latest
+        if: always()
+        steps:
+            - name: Make un error
+              run: exit 1
             - uses: bravo680git/tele-notify@v1
               with:
                 to: ${{ secrets.TELE_CHANNEL_ID }}
